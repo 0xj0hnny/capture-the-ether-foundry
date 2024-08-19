@@ -51,7 +51,7 @@ contract ExploitContract {
         uint256 valToSend = 0;
 
         unchecked {
-            valToSend += numTokens * tokenPrice;
+            valToSend = numTokens * tokenPrice;
         }
 
         require(valToSend < tokenPrice, "value is too large");
