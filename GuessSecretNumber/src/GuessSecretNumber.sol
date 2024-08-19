@@ -29,8 +29,13 @@ contract ExploitContract {
     bytes32 answerHash =
         0xdb81b4d58595fbbbb592d3661a34cdca14d7ab379441400cbfa1b78bc447c365;
 
-    function Exploiter() public view returns (uint8) {
-        uint8 n;
-        return n;
+    function Exploiter() public view returns (uint8 n) {
+        uint8 maxPossibleN = type(uint8).max;
+
+        for (n = 0; n < maxPossibleN; n++) {
+            if (keccak256(abi.encodePacked(n)) == answerHash) {
+                return n;
+            }
+        }
     }
 }
